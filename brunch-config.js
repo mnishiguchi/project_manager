@@ -52,6 +52,10 @@ exports.config = {
   // Configure your plugins
   plugins: {
     babel: {
+      {
+        // https://github.com/babel/babel-brunch#usage
+        presets: ['es2015', 'es2016', 'react']
+      },
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
     }

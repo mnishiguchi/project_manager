@@ -4,6 +4,14 @@ In this repository, I will learn how to build a Trello-like project management a
 
 ---
 
+## Notes
+
+#### Add React
+- Configure [babel/babel-brunch](https://github.com/babel/babel-brunch#usage)
+
+
+---
+
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
