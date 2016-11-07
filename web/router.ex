@@ -16,7 +16,9 @@ defmodule ProjectManager.Router do
   scope "/", ProjectManager do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    # Handle any http request through the index action of the PageController
+    # which will just render the main layout and our Root component.
+    get "/*path", PageController, :index
   end
 
   # Other scopes may use custom stacks.
