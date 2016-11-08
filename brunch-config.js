@@ -22,7 +22,7 @@ exports.config = {
     stylesheets: {
       joinTo: "css/app.css",
       order: {
-        after: ["web/static/css/app.css"] // concat app.css last
+        after: ["web/static/css/app.scss"] // concat app.css last
       }
     },
     templates: {
@@ -42,7 +42,7 @@ exports.config = {
     // Dependencies and current project directories to watch
     watched: [
       "web/static",
-      "test/static"
+      "test/static",
     ],
 
     // Where to compile files to
@@ -53,7 +53,7 @@ exports.config = {
   plugins: {
     babel: {
       // https://github.com/babel/babel-brunch#usage
-      presets: ['es2015', 'es2016', 'react'],
+      presets: ['es2015', 'es2016', 'react', 'stage-2', 'stage-0'],
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
     }
@@ -65,7 +65,16 @@ exports.config = {
     }
   },
 
+  // http://www.phoenixframework.org/docs/static-assets#section-javascript-libraries
   npm: {
-    enabled: true
+    enabled: true,
+    globals: {
+      $:      'jquery',
+      jQuery: 'jquery',
+      Tether: 'tether',  // BS4 needs this
+    },
+    styles: {
+      bootstrap: ['dist/css/bootstrap.min.css']
+    }
   }
 };

@@ -1,37 +1,52 @@
 defmodule ProjectManager.UserSocket do
   use Phoenix.Socket
 
+  alias ProjectManager.{GuardianSerializer}
+
   ## Channels
-  # channel "room:*", ProjectManager.RoomChannel
+  # Informs users about events related to them, for example when they
+  # are invited to join a board.
+  channel "users:*", ProjectManager.UserChannel
+  # Handles messages for managing boards, lists and cards, and informs
+  # any user who may be viewing the bouard at the exact moment of any change.
+  channel "boards:*", ProjectManager.BoardChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
-  # transport :longpoll, Phoenix.Transports.LongPoll
+  transport :longpoll, Phoenix.Transports.LongPoll
 
-  # Socket params are passed from the client and can
-  # be used to verify and authenticate a user. After
-  # verification, you can put default assigns into
-  # the socket that will be set for all channels, ie
-  #
-  #     {:ok, assign(socket, :user_id, verified_user_id)}
-  #
-  # To deny connection, return `:error`.
-  #
-  # See `Phoenix.Token` documentation for examples in
-  # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  # Socket params:
+  # - are passed from the client and
+  # - can be used to verify and authenticate a user
+
+  # Token verification
+  # - After verification, you can put default assigns into the socket that will
+  # be set for all channels.
+  # - To deny connection, return `:error`.
+  # - See `Phoenix.Token` documentation for examples.
+
+  # When invoked with a token, the connect function will:
+  # - verify the token
+  # - get the user from the token
+  # - assign that user to the socket so that it is available for all channels
+  def connect(%{"token" => token}, socket) do
+    case Guardian.decode_and_verify(token) do
+      {:ok, claims} ->
+        case GuardianSerializer.from_token(claims["sub"]) do
+          {:ok, user} ->
+            # Set the default data to socket for all channels.
+            {:ok, assign(socket, :current_user, user)}
+          {:error, _reason} ->
+            :error  # Deny connection
+        end
+      {:error, _reason} ->
+        :error  # Deny connection
+    end
   end
 
-  # Socket id's are topics that allow you to identify all sockets for a given user:
-  #
-  #     def id(socket), do: "users_socket:#{socket.assigns.user_id}"
-  #
-  # Would allow you to broadcast a "disconnect" event and terminate
-  # all active sockets and channels for a given user:
-  #
-  #     ProjectManager.Endpoint.broadcast("users_socket:#{user.id}", "disconnect", %{})
-  #
-  # Returning `nil` makes this socket anonymous.
-  def id(_socket), do: nil
+  # When invoked without a token, it will be considered as an error and the connection
+  # will be denied.
+  def connect(_params, _socket), do: :error  # Deny connection
+
+  def id(socket), do: "users_socket:#{socket.assigns.current_user.id}"
 end

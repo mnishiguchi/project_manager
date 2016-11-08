@@ -11,6 +11,26 @@ defmodule ProjectManager.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    # Looks for the token in the Authorization header.
+    plug Guardian.Plug.VerifyHeader
+
+    # Makes the current resource available through Guardian.Plug.current_resource(conn)
+    # if the token is present.
+    plug Guardian.Plug.LoadResource
+  end
+
+  scope "/api", ProjectManager do
+    pipe_through :api
+
+    scope "/v1" do
+      post "/registrations", RegistrationController, :create
+
+      post "/sessions", SessionController, :create
+      delete "/sessions", SessionController, :delete
+
+      get "/current_user", CurrentUserController, :show
+    end
   end
 
   scope "/", ProjectManager do
@@ -20,9 +40,4 @@ defmodule ProjectManager.Router do
     # which will just render the main layout and our Root component.
     get "/*path", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", ProjectManager do
-  #   pipe_through :api
-  # end
 end

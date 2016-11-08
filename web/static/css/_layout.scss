@@ -1,0 +1,42 @@
+main {
+  min-height: 80vh;
+}
+
+input,
+button {
+  border-radius: 0;
+}
+
+.navbar.navbar-inverse {
+  background-color: $header-color;
+  .navbar-brand {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+  }
+}
+
+footer {
+  vertical-align: middle;
+  padding: 4rem 0;
+  color: $gray-2;
+  background: $footer-color;
+  .contact-info {
+    display: inline-block;
+    padding: 0 5px;
+  }
+  .social-links {
+    display: inline-block;
+    float: right;
+    font-size: 1.0em;
+    a {
+      color:inherit;
+      margin: 0 .5rem;
+      color: $link-hover-color;
+    }
+    a:hover {
+      text-decoration: none;
+      color: white;
+    }
+  }
+}

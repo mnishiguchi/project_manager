@@ -1,3 +1,59 @@
+import React, { PropTypes as T }  from 'react'
+import ReactDOM                   from 'react-dom'
+import { Provider }               from 'react-redux'
+import { Router, browserHistory}  from 'react-router'
+import { syncHistoryWithStore }   from 'react-router-redux'
+import invariant                  from 'invariant'
+
+import configureStore  from './store'
+import configureRoutes from './routes'
+
+const store   = configureStore(browserHistory)
+const history = syncHistoryWithStore(browserHistory, store)
+
+
+// ---
+// CONFIGURE ROOT NODE
+// ---
+
+
+class Root extends React.Component {
+
+  static propTypes = {
+    routerHistory: T.object.isRequired,
+    store:         T.object.isRequired
+  }
+
+  render() {
+    const { routerHistory, store } = this.props
+
+    invariant(
+      routerHistory,
+      '<Root /> needs either a routingContext or routerHistory to render.'
+    )
+
+    return (
+      <Provider store={store}>
+        <Router history={routerHistory}>
+          {configureRoutes(store)}
+        </Router>
+      </Provider>
+    )
+  }
+}
+
+
+// ---
+// START UP
+// ---
+
+
+ReactDOM.render(
+  <Root routerHistory={history} store={store} />,
+  document.querySelector('#root')
+)
+
+
 // Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
 // config.paths.watched in "brunch-config.js".
@@ -19,18 +75,3 @@
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-
-import React                    from 'react';
-import ReactDOM                 from 'react-dom';
-import { browserHistory }       from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import configureStore           from './store';
-import Root                     from './containers/root';
-
-const store   = configureStore(browserHistory);
-const history = syncHistoryWithStore(browserHistory, store);
-
-const target = document.getElementById('main_container');
-const node   = <Root routerHistory={history} store={store} />
-
-ReactDOM.render(node, target);

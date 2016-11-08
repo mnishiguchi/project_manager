@@ -9,3 +9,16 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias ProjectManager.{Repo, User}
+
+[
+  %{
+    first_name: "Masatoshi",
+    last_name:  "Nishiguchi",
+    email:      "mnishiguchi@example.com",
+    password:   "password"
+  },
+]
+|> Enum.map(&User.changeset(%User{}, &1))
+|> Enum.each(&Repo.insert!(&1))

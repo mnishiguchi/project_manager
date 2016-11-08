@@ -1,28 +1,21 @@
+import { browserHistory }               from 'react-router'
 import { createStore, applyMiddleware } from 'redux';
-import { routerMiddleare }              from 'react-router-redux';
-import createLogger                     from 'redux-logger';
-import thunkMiddleware                  from 'redux-thunk';
-import reducers                         from '../reducers';
+import { routerMiddleware }             from 'react-router-redux'
+import thunkMiddleware                  from 'redux-thunk'
+import createLogger                     from 'redux-logger'
 
-const loggerMiddleware = createLogger({
-  level:     'info',
-  collapsed: true,
-});
+import reducers from '../reducers'
 
-/**
- * Here we configure our Redux store with middlewares.
- * - routerMiddleware: to dispatch router actions to the store.
- * - redux-thunk:      to dispatch async actions.
- * - redux-logger:     to log actions and state changes to the browser console.
- */
-export default function configureStore(browserHistory) {
-  const middlewares = [
-    routerMiddleare(browserHistory),
-    thunkMiddleware,
-    loggerMiddleware,
-  ]
+const loggerMiddleware = createLogger({ level: 'info', collapsed: true })
 
-  const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
+const middlewares = [
+  routerMiddleware(browserHistory), // dispatch router actions to the store
+  thunkMiddleware,                  // dispatch async actions
+  loggerMiddleware,
+]
 
-  return createStoreWithMiddleware(reducers);
+const configureStore = (browserHistory) => {
+  return applyMiddleware( ...middlewares )( createStore )( reducers )
 }
+
+export default configureStore

@@ -6,10 +6,9 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
-    "bourbon": "^4.2.6",
-    "bourbon-neat": "^1.7.2",
-    "classnames": "^2.2.1",
-    "es6-promise": "^3.0.2",
+    "classnames": "^2.2.5",
+    "es6-promise": "^4.0.5",
+    "fbemitter": "^2.1.1",
     "history": "^1.17.0",
     "invariant": "^2.2.0",
     "isomorphic-fetch": "^2.2.1",
@@ -25,18 +24,26 @@
     "react-page-click": "^2.0.0",
     "react-redux": "^4.0.4",
     "react-router": "^2.0.1",
-    "react-router-redux": "^4.0.0",
+    "react-router-redux": "^4.0.7",
     "redux": "^3.3.1",
     "redux-logger": "^2.3.2",
-    "redux-thunk": "^1.0.2"
+    "redux-thunk": "^1.0.2",
+    "string": "^3.3.3"
   },
   "devDependencies": {
+    "Faker": "^0.7.2",
     "babel-brunch": "~6.0.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "bootstrap": "^4.0.0-alpha.6",
     "brunch": "2.7.4",
     "clean-css-brunch": "~2.0.0",
+    "copycat-brunch": "^1.1.0",
     "css-brunch": "~2.0.0",
     "javascript-brunch": "~2.0.0",
+    "sass-brunch": "^2.9.0",
+    "tether": "^1.4.0",
     "uglify-js-brunch": "~2.0.1"
   }
 }
