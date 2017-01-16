@@ -25,6 +25,7 @@ Then visit [`localhost:4000`](http://localhost:4000) from your browser.
 ## Production
 
 - [http://www.phoenixframework.org/docs/deployment](http://www.phoenixframework.org/docs/deployment)
+- [http://www.phoenixframework.org/docs/heroku](http://www.phoenixframework.org/docs/heroku)
 
 ---
 

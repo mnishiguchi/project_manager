@@ -12,7 +12,9 @@ defmodule ProjectManager.UserSocket do
   channel "boards:*", ProjectManager.BoardChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  # http://www.phoenixframework.org/docs/heroku
+  transport :websocket, Phoenix.Transports.WebSocket,
+    timeout: 45_000
   transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params:

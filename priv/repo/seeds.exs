@@ -14,9 +14,9 @@ alias ProjectManager.{Repo, User}
 
 [
   %{
-    first_name: "Masatoshi",
-    last_name:  "Nishiguchi",
-    email:      "mnishiguchi@example.com",
+    first_name: "User",
+    last_name:  "Example",
+    email:      "user@example.com",
     password:   "password"
   },
 ]
